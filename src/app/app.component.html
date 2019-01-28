@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<!-- <div style="text-align:center">
+<div style="text-align:center">
   <h1>
     My ToDo
   </h1>
@@ -7,28 +7,48 @@
   <span>Label</span>
   <input type="text" #newTodoLabel>
   <span>Priority</span>
-  <input type="number" #newTodoPriority>
-  <button (click)="addTodo(newTodoLabel.value,newTodoPriority.value)">Add</button>
+  <input type="number" #indexToInsert>
+  <button (click)="addTodo(newTodoLabel.value,indexToInsert.value)">Add</button>
   <br><br>
-  <table class="blueTable">
-    <thead>
-      <tr>
-        <th>Label</th>
-        <th>Priority</th>
-        <th>Done</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let todo of todoList">
-        <td>{{todo.label}}</td>
-        <td>{{todo.priority}}</td>
-        <td>{{todo.done ? '&#10003;' : '&#10005;'}}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<br>
-<br> -->
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" cdkDragLockAxis="y" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
+<div class="d-flex flex-jc-sb">
+  <div class="width-50-percent">
+    <div style="text-align:center;padding-bottom: 20px;"><span class="title">Simple table example</span></div>
+    <table class="blueTable">
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Label</th>
+          <th>Done</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of todoList;index as i">
+          <td>{{i + 1}} </td>
+          <td>{{todo.label}} </td>
+
+          <td>
+            <ui-switch [checked]="todo.done" (change)="onChangeDone($event, i)"></ui-switch>
+          </td>
+          <td><button (click)="deleteTodo(todo)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div cdkDropList class="example-list width-50-percent" (cdkDropListDropped)="drop($event)">
+    <div style="text-align:center;padding-bottom: 20px;"><span class="title">Drag and drop example</span></div>
+    <div class="d-flex flex-jc-sb" style="padding: 10px;border-bottom:1px solid #000">
+      <span>Priority</span>
+      <span>Label</span>
+      <span>Done</span>
+      <span>Action</span>
+    </div>
+    <div class="example-box" *ngFor="let todo of todoList;index as i" cdkDrag>
+      <span>{{i + 1}}</span>
+      <span>{{todo.label}}</span>
+      <ui-switch [checked]="todo.done" (change)="onChangeDone($event, i)"></ui-switch>
+      <span><button (click)="deleteTodo(todo)">Delete</button></span>
+    </div>
+  </div>
 </div>
